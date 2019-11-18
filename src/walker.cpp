@@ -45,10 +45,10 @@ Walker::Walker() {
   botAngle = 0.8;
   clearance = 0.5;
   obstacleAhead = false;
-  pubVel = nh.advertise<geometry_msgs::Twist> 
-	   ("/cmd_vel_mux/input/navi", 1000);
-  sub = nh.subscribe<sensor_msgs::LaserScan> 
-	("/scan", 500, &Walker::laserCallback, this);
+  pubVel = nh.advertise<geometry_msgs::Twist>
+           ("/cmd_vel_mux/input/navi", 1000);
+  sub = nh.subscribe<sensor_msgs::LaserScan>
+        ("/scan", 500, &Walker::laserCallback, this);
   ROS_INFO_STREAM("Default setting initialized.");
   resetBot();
 }
@@ -57,11 +57,11 @@ Walker::Walker() {
 Walker::Walker(const float& speed, const float& angle,
                const double& clr) {
   botSpeed = speed;
-  if (angle > 1.57 or angle < -1.57) {
+  obstacleAhead = false;
+  if (angle > 1.57 || angle < -1.57) {
     ROS_WARN_STREAM("Angle exceeds 90 deg, setting to 90 deg.");
     botAngle = 1.57;
-  } 
-  else {
+  } else {
     botAngle = angle;
   }
   clearance = clr;
@@ -84,36 +84,6 @@ void Walker::resetBot() {
   pubVel.publish(msg);
 }
 
-// Get botSpeed
-float Walker::getSpeed() {
-  return botSpeed;
-}
-
-// Set botSpeed
-void Walker::setSpeed(const float& speed) {
-  botSpeed = speed;
-}
-
-// Get botAngle
-float Walker::getAngle() {
-  return botAngle;
-}
-
-// Set botAngle
-void Walker::setAngle(const float& angle) {
-  botAngle = angle;
-}
-
-// Get clearance
-double Walker::getClearance() {
-  return clearance;
-}
-
-// Set clearance
-void Walker::setClearance(const double& clr) {
-  clearance = clr;
-}
-
 // Get obstacleAhead
 bool Walker::getObstacleAhead() {
   return obstacleAhead;
@@ -127,8 +97,7 @@ void Walker::startWalking() {
       ROS_WARN_STREAM("Obstacle detected.");
       msg.linear.x = 0.0;
       msg.angular.z = botAngle;
-    } 
-    else {
+    } else {
       msg.angular.z = 0.0;
       msg.linear.x = botSpeed;
     }
