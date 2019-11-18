@@ -89,44 +89,6 @@ class Walker {
    */
   bool getObstacleAhead();
 
-   /**
-   * @brief get maximum speed of the bot
-   * @return float speed
-   */
-  float getSpeed();
-
-  /**
-   * @brief set maximum speed of the bot
-   * @param speed of the bot
-   * @return void
-   */
-  void setSpeed(const float& speed);
-
-  /**
-   * @brief get angle of the bot
-   * @return float 
-   */
-  float getAngle();
-
-  /**
-   * @brief set maximum rotation of the bot
-   * @param rotation angle in radiance
-   * @return void
-   */
-  void setAngle(const float& angle);
-
-  /**
-   * @brief get clearance
-   * @return double
-   */
-  double getClearance();
-
-  /**
-   * @brief set clearance
-   * @return void
-   */
-  void setClearance(const double& clr);
-
   /** @brief Start walking
    *  @return void
    */
